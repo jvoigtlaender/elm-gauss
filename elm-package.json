@@ -1,5 +1,5 @@
 {
-    "version": "1.0.0",
+    "version": "1.0.1",
     "summary": "The Gauss and Gauss-Jordan Elimination Algorithms",
     "repository": "https://github.com/jvoigtlaender/elm-gauss.git",
     "license": "BSD3",
