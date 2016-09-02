@@ -42,7 +42,7 @@ gauss n =
                     Debug.crash "IMPOSSIBLE!"
 
                 Just column ->
-                    case List.find (\( _, v ) -> v /= Ratio.fromInt 0) (List.drop i (Array.toIndexedList column)) of
+                    case List.find (\( _, v ) -> Ratio.numerator v /= 0) (List.drop i (Array.toIndexedList column)) of
                         Nothing ->
                             m
 
@@ -86,7 +86,7 @@ gaussJordan : Int -> Matrix Rational -> Matrix Rational
 gaussJordan n =
     let
         backward i m =
-            if safeGet i i m == Ratio.fromInt 0 then
+            if Ratio.numerator (safeGet i i m) == 0 then
                 m
             else
                 List.foldl
