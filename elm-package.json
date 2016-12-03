@@ -1,5 +1,5 @@
 {
-    "version": "1.0.1",
+    "version": "1.0.2",
     "summary": "The Gauss and Gauss-Jordan Elimination Algorithms",
     "repository": "https://github.com/jvoigtlaender/elm-gauss.git",
     "license": "BSD3",
@@ -11,9 +11,9 @@
     ],
     "dependencies": {
         "eeue56/elm-flat-matrix": "3.0.0 <= v < 4.0.0",
-        "elm-community/list-extra": "3.0.0 <= v < 4.0.0",
-        "elm-lang/core": "4.0.0 <= v < 5.0.0",
-        "imeckler/ratio": "2.0.0 <= v < 3.0.0"
+        "elm-community/list-extra": "4.0.0 <= v < 5.0.0",
+        "elm-community/ratio": "1.0.0 <= v < 2.0.0",
+        "elm-lang/core": "5.0.0 <= v < 6.0.0"
     },
-    "elm-version": "0.17.0 <= v < 0.18.0"
+    "elm-version": "0.18.0 <= v < 0.19.0"
 }

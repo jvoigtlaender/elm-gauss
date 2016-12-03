@@ -34,7 +34,7 @@ gauss n =
             if i == j then
                 m
             else
-                List.foldl (\c -> Matrix.set c j (safeGet c i m) >> Matrix.set c i (safeGet c j m)) m [i..n]
+                List.foldl (\c -> Matrix.set c j (safeGet c i m) >> Matrix.set c i (safeGet c j m)) m (List.range i n)
 
         forward i m =
             case Matrix.getColumn i m of
@@ -48,24 +48,24 @@ gauss n =
 
                         Just ( j, v ) ->
                             let
-                                m' =
+                                m_ =
                                     swapIfNecessary i j m
                                         |> Matrix.set i i one
-                                        |> flip (List.foldl (\c -> Matrix.update c i (flip Ratio.divide v))) [i + 1..n]
+                                        |> flip (List.foldl (\c -> Matrix.update c i (flip Ratio.divide v))) (List.range (i + 1) n)
                             in
                                 List.foldl
                                     (\r ->
                                         let
                                             f =
-                                                Ratio.negate (safeGet i r m')
+                                                Ratio.negate (safeGet i r m_)
                                         in
                                             Matrix.set i r zero
-                                                >> flip (List.foldl (\c -> Matrix.update c r (Ratio.add (Ratio.multiply f (safeGet c i m'))))) [i + 1..n]
+                                                >> flip (List.foldl (\c -> Matrix.update c r (Ratio.add (Ratio.multiply f (safeGet c i m_))))) (List.range (i + 1) n)
                                     )
-                                    m'
-                                    [i + 1..n - 1]
+                                    m_
+                                    (List.range (i + 1) (n - 1))
     in
-        flip (List.foldl forward) [0..n - 1]
+        flip (List.foldl forward) (List.range 0 (n - 1))
 
 
 {-| `gaussJordan 3` on matrix
@@ -96,12 +96,12 @@ gaussJordan n =
                                 Ratio.negate (safeGet i r m)
                         in
                             Matrix.set i r zero
-                                >> flip (List.foldl (\c -> Matrix.update c r (Ratio.add (Ratio.multiply k (safeGet c i m))))) [i + 1..n]
+                                >> flip (List.foldl (\c -> Matrix.update c r (Ratio.add (Ratio.multiply k (safeGet c i m))))) (List.range (i + 1) n)
                     )
                     m
-                    [0..i - 1]
+                    (List.range 0 (i - 1))
     in
-        gauss n >> flip (List.foldl backward) (List.reverse [1..n - 1])
+        gauss n >> flip (List.foldl backward) (List.reverse (List.range 1 (n - 1)))
 
 
 safeGet i j m =
